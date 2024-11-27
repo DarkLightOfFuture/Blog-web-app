@@ -44,9 +44,10 @@ Email Address []: any
 
 ## Application building
 1. Run `docker pull mcr.microsoft.com/mssql/server:2022-latest`.
-2. Go to main directory of the application.
-3. Run command `docker-compose up`.
-4. After that has completed, At your browser open: https://localhost
+2. Run `git clone https://github.com/DarkLightOfFuture/Blog-web-app.git <your_path_with_directory_for_app>`
+3. Go to main directory of the application.
+4. Run command `docker-compose up`.
+5. After that has completed, At your browser open: https://localhost
 
 ## Built in administrator account
 - Email: default@default.com

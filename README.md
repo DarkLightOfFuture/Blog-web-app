@@ -10,9 +10,41 @@ Application has such features as:
 - user personalization
 - access control for particular subpages
 
+## Self signed certificate (required to proper work of app, do this before building)
+### ASP.NET Core
+On Windows:
+- Run `dotnet dev-certs https -ep C:\asp-certs\sslCert.pfx -p pas123`
+
+On others or if you want change path of certificate:
+- Run `dotnet dev-certs https -ep <your_path>\sslCert.pfx -p pas123`
+- Run sslCert.pfx, click `install certificate`, and follow instructions
+```yaml
+# Inside of docker-compose.yaml, change from this:
+- "c:\\asp-certs:/https"
+# To this:
+- "<your_path>:/App/keys"
+
+# Also during building app on Linux / macOS you need to do the same stuff with:
+- "c:\\asp-keys:/App/keys"
+```
+### Angular + Nginx
+- Run `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout <path_to_app_main_directory>/ssl/localhostAngular.key -out <path_to_app_main_directory>/ssl/certs/localhostAngular.crt`
+```
+Output
+
+Country Name (2 letter code) [AU]: any
+State or Province Name (full name) [Some-State]: any
+Locality Name (eg, city) []:New York City
+Organization Name (eg, company) [Internet Widgits Pty Ltd]: any
+Organizational Unit Name (eg, section) []: any
+Common Name (e.g. server FQDN or YOUR name) []: localhost
+Email Address []: any
+```
+- Run localhostAngular.crt, click `install certificate`, and follow instructions
+
 ## To build an application, follow these steps:
 1. Go to main directory of the application.
-2. Run command **docker-compose up**
+2. Run command `docker-compose up`
 3. After that has completed, At your browser open: https://localhost
 
 ## Built in administrator account

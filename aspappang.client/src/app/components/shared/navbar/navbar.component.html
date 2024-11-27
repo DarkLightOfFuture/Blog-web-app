@@ -1,0 +1,26 @@
+<nav id="nav">
+  <div class="navLinks">
+    <a class="navbar-brand" id="navbar-brand" routerLink="/">aspApp</a>
+    <ng-template [ngIf]="user?.username">
+      <a class="nav-link navLink" routerLink="/posts">Posts</a>
+      <a class="nav-link navLink" routerLink="/tags">Tags</a>
+      <a class="nav-link navLink" [routerLink]="['comments']">Comments</a>
+    </ng-template>
+  </div>
+  <div class="accountOpts">
+    <label class="switch">
+      <input id="checkBox" (click)="toggleTheme()" type="checkbox" [(ngModel)]="isDarkTheme" />
+      <div id="slider"></div>
+    </label>
+    <ng-container *ngIf="user?.username; else guest">
+      <a asp-controller="Users" [routerLink]="['/user/settings']"><img [src]="user?.avatar" /></a>
+      <div class="form-inline"> 
+        <button type="submit" (click)="authService.signOut()" class="btn btn-link">Logout</button>
+      </div>
+    </ng-container>
+    <ng-template #guest>
+      <a class="nav-link navLink" [routerLink]="['/user/register']">Register</a>
+      <a class="nav-link navLink" routerLink="/user/login">Login</a>
+    </ng-template>
+  </div>
+</nav>

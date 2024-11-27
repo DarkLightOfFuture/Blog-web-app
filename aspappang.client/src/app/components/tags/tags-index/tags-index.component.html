@@ -1,0 +1,121 @@
+<h1 style="margin-bottom: 20px">
+  Tags
+  <a asp-action="Create"><button class="btn btn-primary" (click)="this.tagService?.switchStateCreationForm();setModelForm()">Create New</button></a>
+</h1>
+
+<div class="searchRowContainer">
+  <div class="searchInputBox second">
+    <input [formControl]="searchRow" type="text" id="searchRow" required="required" />
+    <label for="searchRow">Search Tag</label>
+    <div class="underline"></div>
+  </div>
+  <div class="choice">
+    <div>
+      <input type="radio" name="choice" value="name" [(ngModel)]="choice" />
+      <div>Name</div>
+    </div>
+    <div>
+      <input type="radio" name="choice" value="id" [(ngModel)]="choice" />
+      <div>Id</div>
+    </div>
+  </div>
+</div>
+
+<div [@alertAnimation] *ngIf="tagService?.isAnyToDelete()">
+  <div *ngIf="this.tagService?.deleteForm?.error" class="error">Error {{ this.tagService?.deleteForm?.error }}</div>
+  <div (click)="tagService?.clearToDeleteList()" class="btn btn-dark" id="removeBtn">Clear</div>
+  <button (click)="tagService?.deleteItems()" [ngClass]="{ 'loading': this.tagService?.deleteForm?.isLoading }" class="btn btn-danger" id="removeBtn">Remove</button>
+  <div (click)="tagService?.setAllToDelete()" class="btn btn-secondary" id="removeBtn">All</div>
+</div>
+
+<div class="itemRow creationForm" style="margin-bottom: 3rem" [@appear] *ngIf="this.tags.isCreationForm">
+  <div style="height: 2.9rem"></div>
+  <div class="data">
+    <ng-container [ngTemplateOutlet]="tagContent" [ngTemplateOutletContext]="{ tag: modelForm, isForm: true }"></ng-container>
+    <div class="actions">
+      <div *ngIf="this.modelForm?.error" class="error">Error {{ this.modelForm?.error }}</div>
+      <div (click)="this.tagService?.switchStateCreationForm()" class="btn btn-outline-secondary">Cancel</div>
+      <button class="btn btn-outline-primary" [ngClass]="{ 'loading': this.modelForm?.isLoading }" (click)="this.createTag()">Create</button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="tags.array != null; else elseBlock">
+  <ng-container *ngFor="let tag of tags.array">
+    <ng-container *ngIf="!tag.isNew; else new">
+      <div class="itemRowContainer" [ngClass]="{ 'toDelete': tag.toDelete }">
+        <ng-container [ngTemplateOutlet]="itemRowContainer" [ngTemplateOutletContext]="{ tag: tag }"></ng-container>
+      </div>
+    </ng-container>
+    <ng-template #new>
+      <div class="itemRowContainer" [@new] [ngClass]="{ 'toDelete': tag.toDelete }">
+        <ng-container [ngTemplateOutlet]="itemRowContainer" [ngTemplateOutletContext]="{ tag: tag }"></ng-container>
+      </div>
+    </ng-template>
+  </ng-container>
+</ng-container>
+<ng-template #elseBlock>
+  <ng-container *ngIf="tags.error == null; else error">
+    <!--<div class="itemRow" style="height: 5rem"></div>-->
+  </ng-container>
+  <ng-template #error>
+    <p>Error {{ tags.error }}</p>
+  </ng-template>
+</ng-template>
+
+<ng-template #itemRowContainer let-tag="tag">
+  <div class="delete" (click)="tagService?.setToDelete(tag)">
+    <div>X</div>
+  </div>
+  <div #items [ngStyle]="{ 'overflow': tag.isOpened ? 'hidden' : '' }"
+       [@height]="{ value: tag.isOpened ? 'opened' : 'closed', params: { startHeight: tag.startHeight, endHeight: tag.endHeight } }"
+       class="itemRow">
+    <div>
+      <ng-container *ngIf="!tag.isOpened">
+        <div>
+          {{ tag.content?.id }}
+          <div class="name">Id</div>
+        </div>
+        <div>
+          {{ tag.content?.name }}
+          <div class="name">Name</div>
+        </div>
+      </ng-container>
+      <div (click)="this.tagService?.loadItem(tag)">
+        <div class="arrowBtn" [ngClass]="{ 'loading': tag.isLoading && !tag.isOpened  }"><span [@rotateBtn]="tag.isOpened2 ? 'opened' : 'closed'">^</span></div>
+      </div>
+    </div>
+    <div class="data" *ngIf="tag.isOpened">
+      <ng-container [ngTemplateOutlet]="tagContent" [ngTemplateOutletContext]="{ tag: tag, isForm: false }"></ng-container>
+      <div class="actions">
+        <div class="error" *ngIf="tag.error">
+          Error {{ tag.error }}
+        </div>
+        <ng-container *ngIf="tag.isEdited">
+          <div class="btn btn-outline-secondary" id="cancel" (click)="tagService?.edit(tag)">Cancel</div>
+          <button class="btn btn-outline-primary" [ngClass]="{ 'loading': tag?.isLoading }" (click)="updateTag(tag)">Save</button>
+        </ng-container>
+        <ng-container *ngIf="!tag.isEdited">
+          <div class="btn btn-outline-primary" (click)="this.tagService?.edit(tag);edit(tag)">Edit</div>
+          <button class="btn btn-outline-danger" [ngClass]="{ 'loading': tag.isLoading }" (click)="tagService?.deleteItem(tag)">Delete</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #tagContent let-tag="tag" let-isForm="isForm">
+  <table>
+    <tr *ngIf="!isForm">
+      <td>Id:</td>
+      <td>{{ tag.content?.id }}</td>
+    </tr>
+    <tr>
+      <td>Name:</td>
+      <td [formGroup]="form">
+        <ng-container *ngIf="!tag.isEdited; else edit1">{{ tag.content?.name }}</ng-container>
+        <ng-template #edit1><input #name formControlName="name" /></ng-template>
+      </td>
+    </tr>
+  </table>
+</ng-template>

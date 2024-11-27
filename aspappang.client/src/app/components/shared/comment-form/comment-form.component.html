@@ -1,0 +1,21 @@
+<div class="commentForm" *ngIf="user?.username; else guest">
+  <div class="commentInputBlock">
+    <img [src]="user?.avatar" />
+    <textarea #textarea [formControl]="form" [(ngModel)]="content" rows="1" asp-for="Content"></textarea>
+    <span>
+      <span [ngStyle]="{ 'color': isEnough == false ? 'red' : '' }">
+        <ng-container *ngIf="isEnough == true">✓</ng-container>
+        <ng-container *ngIf="isEnough == false">X</ng-container>
+      </span>
+      <span>{{ content.length }}</span>/600
+    </span>
+  </div>
+  <div style="display: flex; align-items: center;">
+    <div class="submitBtn" (click)="createComment()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+    </div>
+  </div>
+</div>
+<ng-template #guest>
+  <p style="padding: 0rem 1rem;">To add comment, please <a id="login" [routerLink]="['/user/login']">log in</a>.</p>
+</ng-template>

@@ -1,0 +1,193 @@
+<h1 style="margin-bottom: 20px">
+  Posts
+  <a asp-action="Create"><button class="btn btn-primary" (click)="this.postService?.switchStateCreationForm();loadTags();setModelForm()">Create New</button></a>
+</h1>
+
+<div [@alertAnimation] *ngIf="postService?.isAnyToDelete()">
+  <div *ngIf="this.postService?.deleteForm?.error" class="error">Error {{ this.postService?.deleteForm?.error }}</div>
+  <div (click)="postService?.clearToDeleteList()" class="btn btn-dark" id="removeBtn">Clear</div>
+  <button (click)="postService?.deleteItems()" [ngClass]="{ 'loading': this.postService?.deleteForm?.isLoading }" class="btn btn-danger" id="removeBtn">Remove</button>
+  <div (click)="postService?.setAllToDelete()" class="btn btn-secondary" id="removeBtn">All</div>
+</div>
+
+<div class="searchRowContainer">
+  <div class="searchInputBox second">
+    <input [formControl]="searchRow" type="text" id="searchRow" required="required" />
+    <label for="searchRow">Search Post</label>
+    <div class="underline"></div>
+  </div>
+  <div class="choice">
+    <div>
+      <input type="radio" name="choice" value="description" [(ngModel)]="choice" />
+      <div>Description</div>
+    </div>
+    <div>
+      <input type="radio" name="choice" value="id" [(ngModel)]="choice" />
+      <div>Id</div>
+    </div>
+  </div>
+</div>
+
+<div class="itemRow creationForm" style="margin-bottom: 3rem" [@appear] *ngIf="this.posts.isCreationForm">
+  <div style="height: 2.9rem"></div>
+  <div class="data">
+    <ng-container [ngTemplateOutlet]="postContent" [ngTemplateOutletContext]="{ post: modelForm, isForm: true }"></ng-container>
+    <div class="actions">
+      <div *ngIf="this.modelForm?.error" class="error">Error {{ this.modelForm?.error }}</div>
+      <div (click)="this.postService?.switchStateCreationForm()" class="btn btn-outline-secondary">Cancel</div>
+      <button class="btn btn-outline-primary" [ngClass]="{ 'loading': this.modelForm?.isLoading }" (click)="createPost()">Create</button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="posts.array != null; else elseBlock">
+  <ng-container *ngFor="let post of posts.array">
+    <ng-container *ngIf="!post.isNew; else new">
+      <div class="itemRowContainer" [ngClass]="{ 'toDelete': post.toDelete }">
+        <ng-container [ngTemplateOutlet]="itemRowContainer" [ngTemplateOutletContext]="{ post: post }"></ng-container>
+      </div>
+    </ng-container>
+    <ng-template #new>
+      <div class="itemRowContainer" [@new] [ngClass]="{ 'toDelete': post.toDelete }">
+        <ng-container [ngTemplateOutlet]="itemRowContainer" [ngTemplateOutletContext]="{ post: post }"></ng-container>
+      </div>
+    </ng-template>
+  </ng-container>
+</ng-container>
+<ng-template #elseBlock>
+  <ng-container *ngIf="posts.error == null; else error">
+    <!--<div class="itemRow" style="height: 5rem"></div>-->
+  </ng-container>
+  <ng-template #error>
+    <p>Error {{ posts.error }}</p>
+  </ng-template>
+</ng-template>
+
+<ng-template #itemRowContainer let-post="post">
+  <div class="delete" (click)="postService?.setToDelete(post)">
+    <div>X</div>
+  </div>
+  <div #items [ngStyle]="{ 'overflow': post.isOpened ? 'hidden' : '' }"
+       [@height]="{ value: post.isOpened ? 'opened' : 'closed', params: { startHeight: post.startHeight, endHeight: post.endHeight } }"
+       class="itemRow">
+    <div>
+      <ng-container *ngIf="!post.isOpened">
+        <div>
+          {{ post.content?.id }}
+          <div class="name">Id</div>
+        </div>
+        <div>
+          {{ post.content?.title }}
+          <div class="name">Title</div>
+        </div>
+      </ng-container>
+      <div (click)="loadPost(post)">
+        <div class="arrowBtn" [ngClass]="{ 'loading': post.isLoading && !post.isOpened  }"><span [@rotateBtn]="post.isOpened2 ? 'opened' : 'closed'">^</span></div>
+      </div>
+    </div>
+    <div class="data" *ngIf="post.isOpened">
+      <ng-container [ngTemplateOutlet]="postContent" [ngTemplateOutletContext]="{ post: post, isForm: false }"></ng-container>
+      <div class="actions">
+        <div class="error" *ngIf="post.error">
+         Error {{ post.error }}
+        </div>
+        <ng-container *ngIf="post.isEdited">
+          <div class="btn btn-outline-secondary" id="cancel" (click)="resetTags(post);postService?.edit(post)">Cancel</div>
+          <button class="btn btn-outline-primary" [ngClass]="{ 'loading': post?.isLoading }" (click)="updatePost(post)">Save</button>
+        </ng-container>
+        <ng-container *ngIf="!post.isEdited">
+          <div class="btn btn-outline-primary" (click)="this.postService?.edit(post);edit(post)">Edit</div>
+          <button class="btn btn-outline-danger" [ngClass]="{ 'loading': post.isLoading }" (click)="postService?.deleteItem(post)">Delete</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #postContent let-post="post" let-isForm="isForm">
+  <table [formGroup]="form">
+    <ng-container *ngIf="!isForm">
+      <tr>
+        <td>PubDate:</td>
+        <td>{{ post.content?.pubDate }}</td>
+      </tr>
+      <tr>
+        <td>Id:</td>
+        <td>{{ post.content?.id }}</td>
+      </tr>
+      <tr>
+        <td>Author info:</td>
+        <td>{{ post.content?.authorInfo }}</td>
+      </tr>
+    </ng-container>
+    <tr>
+      <td>Title:</td>
+      <td>
+        <ng-container *ngIf="!post.isEdited; else edit1">{{ post.content?.title }}</ng-container>
+        <ng-template #edit1><input formControlName="title" /></ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td>Tags:</td>
+      <td class="tagsRow">
+        <div *ngIf="post.isEdited" class="tagsContainer">
+          <div class="searchInputBox">
+            <input [formControl]="searchBox" type="text" id="searchTag" required="required" />
+            <label for="searchTag">Search tag</label>
+            <div class="underline"></div>
+          </div>
+          <div class="tags tagContent">
+            <div class="tagCreationForm">
+              <label class="tagForm">
+                <input [formControl]="tagName" type="text" />
+              </label>
+              <p class="submitBtn" (click)="addTag()">+</p>
+              <ng-container *ngFor="let tag of tags.array">
+                <div class="tagForm" [@appear] [ngClass]="{ 'checked': tag.content?.isChosen ? true : false }" (click)="chooseTag(tag.content, post)">
+                  <span class="tagName">{{ tag.content?.name }}</span>
+                  <span class="tagCount">({{ tag.content?.count }})</span>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="articleTags">
+          <div (click)="removeTag(tag, post)" [ngClass]="{ 'edited': post.isEdited }" *ngFor="let tag of post.content?.tags" class="tagForm">
+            {{ tag?.name }}
+          </div>
+          <ng-container *ngIf="post.content?.areManyTags && !post.isEdited">
+            <div class="overlay"></div>
+            <div class="moreBtn" (click)="showMore(post)">Show more</div>
+          </ng-container>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>Thumbnail:</td>
+      <td>
+        <ng-container *ngIf="!post.isEdited; else edit2">
+          {{ post.content?.thumbnail.substr(0, 90) }}
+          <ng-container *ngIf="postService?.isLong(post.content?.thumbnail)">
+            ...
+          </ng-container>
+        </ng-container>
+        <ng-template #edit2><input formControlName="thumbnail" /></ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td>
+        <ng-container *ngIf="!post.isEdited; else edit3">
+          {{ post.content?.description?.substr(0, 90) }}
+          <ng-container *ngIf="postService?.isLong(post.content?.description)">
+            ...
+          </ng-container>
+        </ng-container>
+        <ng-template #edit3>
+          <post-form [outerHTML]="post.content?.description"></post-form>
+          <textarea style="display: none" formControlName="description"></textarea>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</ng-template>

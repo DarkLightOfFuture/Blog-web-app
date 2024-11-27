@@ -1,0 +1,26 @@
+<div id="articlePreviewsContainer">
+  <ng-container *ngIf="posts.array != null; else elseBlock">
+    <div *ngFor="let post of posts.array">
+      <a class="articleContainerLink" [routerLink]="['/posts/show', post.content?.id]">
+        <div class="articleContainer">
+          <img src="{{ post.content?.thumbnail }}" class="articlePreviewImg">
+          <div></div>
+          <p>{{ post.content?.title }}</p>
+        </div>
+      </a>
+    </div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <ng-container *ngIf="posts.error == null; else error">
+      <div *ngFor="let el of arr">
+        <a class="articleContainerLink">
+          <div class="articleContainer">
+          </div>
+        </a>
+      </div>
+    </ng-container>
+    <ng-template #error>
+      <p>Error {{ posts.error }}</p>
+    </ng-template>
+  </ng-template>
+</div>

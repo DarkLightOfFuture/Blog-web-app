@@ -1,0 +1,28 @@
+<div *ngIf="mainClass == 'mainArticle'" id="progressBarContainer">
+  <div id="progressBar"></div>
+</div>
+
+<div id="alertContainer">
+  <div [@alertAnimation] (click)="this.alertService.deactivate(alert)"
+       [ngClass]="{ 'success': alert.isSuccess }" class="alert" *ngFor="let alert of this.alerts">
+    {{ alert.content }}
+  </div>
+</div>
+
+<main [id]="mainClass">
+  <navbar></navbar>
+  <header *ngIf="isMainPage" class="header">
+    <h1 class="text-center" style="user-select: none;">Latest posts.</h1>
+  </header>
+  <aside *ngIf="mainClass != 'mainSettings'" class="aside1">
+  </aside>
+  <section [id]="sectionId">
+    <router-outlet (activate)="changeTemplate()"></router-outlet>
+  </section>
+  <footer *ngIf="mainClass != 'mainSettings'" id="footer">
+    <div class="container text-muted">
+      &copy; 2024 - aspAppAng - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+  </footer>
+</main>
+

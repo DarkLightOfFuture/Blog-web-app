@@ -1,0 +1,194 @@
+#uploadImageContainer {
+  flex-direction: column;
+  height: fit-content;
+  width: 50rem;
+  padding: 1rem;
+  background-color: var(--menu-lightMode);
+  z-index: 12;
+}
+
+#uploadImageContainer.darkTheme {
+  background-color: #242424;
+  color: #aeaeae;
+}
+
+#uploadImageContainer .top {
+  display: flex;
+  flex-direction: row;
+  background-color: transparent;
+  border: 0px solid #2e2f2f;
+  border-bottom-width: 2px;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+#uploadImageContainer .top div {
+  display: flex;
+  flex-grow: 1;
+  justify-content: end;
+}
+
+#uploadImageContainer .top svg {
+  fill: red;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+#uploadImageContainer .input {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input .actionContainer {
+  display: flex;
+  gap: 2rem;
+  justify-content: end;
+}
+
+.input .actionContainer p {
+  font-size: 1.1rem;
+  display: flex;
+  user-select: none;
+  position: relative;
+  transform: translateY(25%);
+}
+
+.input .actionContainer p:hover {
+  cursor: pointer;
+  color: #eae4e4;
+}
+
+#uploadImageContainer svg, .profileAvatar svg {
+  cursor: pointer;
+}
+
+#uploadImageContainer .input input[type=radio] {
+  display: none;
+}
+
+#uploadImageContainer label {
+  cursor: pointer
+}
+
+#uploadImageContainer .input .uploadSwitch {
+  position: relative;
+  background-color: #262626;
+  padding: 0.5rem;
+  border-radius: 1.2rem;
+  width: fit-content;
+  display: flex;
+  gap: 1rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #d5d2d2;
+}
+
+#uploadImageContainer .input .uploadSwitch.darkTheme {
+  background-color: #111010;
+}
+
+#uploadImageContainer .input .uploadSwitch .slider {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.4rem;
+  height: 80%;
+  width: 6.4rem;
+  border-radius: 1rem;
+  background-color: #201862;
+  transition: all 0.3s;
+  z-index: 1;
+}
+
+#uploadImageContainer .input .uploadSwitch .slider.darkTheme {
+  background-color: #1e1b35;
+}
+
+#uploadImageContainer .input input[type=radio][id='url']:checked ~ .slider {
+  transform: translate(6.8rem, -50%);
+  width: 2.2rem;
+}
+
+#uploadImageContainer .input .uploadSwitch label {
+  z-index: 2;
+}
+
+.uploadContainer, .addressSelectionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+}
+
+.addressSelectionContainer {
+  gap: 0.6rem;
+}
+
+.addressSelectionContainer .inputBox, .addressSelectionContainer input {
+  width: 100% !important;
+}
+
+.uploadContainer {
+  cursor: pointer;
+  background-color: #e5dbdb;
+  border: 2px solid #cabdbd;
+  border-radius: .5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+.uploadContainer:hover {
+  background-color: #ede3e3;
+}
+
+.uploadContainer.darkTheme {
+  background-color: #211f1f;
+  border-color: #1e1c1c;
+}
+
+.uploadContainer.darkTheme:hover {
+  background-color: #262323;
+}
+
+.uploadContainer:hover .uploadBtn.darkTheme {
+  background-color: #343030;
+}
+
+.uploadContainer .uploadBtn {
+  background-color: #dcd4d4;
+  padding: .5rem;
+  border: 1px solid #c6c5c5;
+  border-radius: 0.4rem;
+  margin-right: 0.5rem;
+}
+
+.uploadContainer .uploadBtn.darkTheme {
+  background-color: #2a2626;
+}
+
+.formatTypes, .error, .wait {
+  font-size: 0.7rem;
+}
+
+.error, .wait {
+  align-self: start;
+}
+
+.wait {
+  color: #1029e8;
+}
+
+input[type='file'] {
+  cursor: pointer;
+  position: absolute;
+  height: inherit;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}

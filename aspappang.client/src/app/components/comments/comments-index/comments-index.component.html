@@ -1,0 +1,106 @@
+<h1 style="margin-bottom: 20px">
+  Comments
+</h1>
+
+<div class="searchRowContainer">
+  <div class="searchInputBox second">
+    <input [formControl]="searchRow" type="text" id="searchRow" required="required" />
+    <label for="searchRow">Search Comment</label>
+    <div class="underline"></div>
+  </div>
+  <div class="choice">
+    <div>
+      <input type="radio" name="choice" value="content" [(ngModel)]="choice" />
+      <div>Content</div>
+    </div>
+    <div>
+      <input type="radio" name="choice" value="postid" [(ngModel)]="choice" />
+      <div>Post Id</div>
+    </div>
+    <div>
+      <input type="radio" name="choice" value="id" [(ngModel)]="choice" />
+      <div>Id</div>
+    </div>
+  </div>
+</div>
+
+<div [@alertAnimation] *ngIf="commentService?.isAnyToDelete()">
+  <div *ngIf="this.commentService?.deleteForm?.error" class="error">Error {{ this.commentService?.deleteForm?.error }}</div>
+  <div (click)="commentService?.clearToDeleteList()" class="btn btn-dark" id="removeBtn">Clear</div>
+  <button (click)="commentService?.deleteItems()" [ngClass]="{ 'loading': this.commentService?.deleteForm?.isLoading }" class="btn btn-danger" id="removeBtn">Remove</button>
+  <div (click)="commentService?.setAllToDelete()" class="btn btn-secondary" id="removeBtn">All</div>
+</div>
+
+<ng-container *ngIf="comments.array != null; else elseBlock">
+  <ng-container *ngFor="let comment of comments.array">
+    <div class="itemRowContainer" [ngClass]="{ 'toDelete': comment.toDelete }">
+      <div class="delete" (click)="commentService?.setToDelete(comment)">
+        <div>X</div>
+      </div>
+      <div #items [ngStyle]="{ 'overflow': comment.isOpened ? 'hidden' : '' }"
+           [@height]="{ value: comment.isOpened ? 'opened' : 'closed', params: { startHeight: comment.startHeight, endHeight: comment.endHeight } }"
+           class="itemRow">
+        <div>
+          <ng-container *ngIf="!comment.isOpened">
+            <div>
+              {{ comment.content?.id }}
+              <div class="name">Id</div>
+            </div>
+            <div>
+              {{ comment.content?.user?.username }}
+              <div class="name">Username</div>
+            </div>
+          </ng-container>
+          <div (click)="this.commentService?.loadItem(comment)">
+            <div class="arrowBtn" [ngClass]="{ 'loading': comment.isLoading && !comment.isOpened  }"><span [@rotateBtn]="comment.isOpened2 ? 'opened' : 'closed'">^</span></div>
+          </div>
+        </div>
+        <div class="data" *ngIf="comment.isOpened">
+          <ng-container [ngTemplateOutlet]="commentContent" [ngTemplateOutletContext]="{ comment: comment }"></ng-container>
+          <div class="actions">
+            <div class="error" *ngIf="comment.error">
+              Error {{ comment.error }}
+            </div>
+            <button class="btn btn-outline-danger" [ngClass]="{ 'loading': comment.isLoading }" (click)="commentService?.deleteItem(comment)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-template #elseBlock>
+  <ng-container *ngIf="comments.error == null; else error">
+    <!--<div class="itemRow" style="height: 5rem"></div>-->
+  </ng-container>
+  <ng-template #error>
+    <p>Error {{ comments.error }}</p>
+  </ng-template>
+</ng-template>
+
+<ng-template #commentContent let-comment="comment">
+  <table>
+    <tr>
+      <td>PubDate:</td>
+      <td>{{ comment.content?.pubDate }}</td>
+    </tr>
+    <tr>
+      <td>Id:</td>
+      <td>{{ comment.content?.id }}</td>
+    </tr>
+    <tr>
+      <td>PostId:</td>
+      <td>
+        {{ comment.content?.postId }}
+      </td>
+    </tr>
+    <tr>
+      <td>Username:</td>
+      <td>{{ comment.content?.user.username }}</td>
+    </tr>
+    <tr>
+      <td>Content:</td>
+      <td>{{ comment.content?.content }}</td>
+    </tr>
+    <tr>
+  </table>
+</ng-template>

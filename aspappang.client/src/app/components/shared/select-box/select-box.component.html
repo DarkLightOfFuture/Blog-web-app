@@ -1,0 +1,12 @@
+<div>
+  <div class="selectBox">
+    <input id="commentsOrder" value="Latest" />
+    <div #select class="select" (click)="toggle()" [ngClass]="{ 'focus': this.isOpened }">
+      <p>{{ this.chosenOption }}</p>
+      <p [ngClass]="{ 'focus': this.isOpened }">^</p>
+    </div>
+    <div [@scale] *ngIf="this.isOpened" class="options">
+      <div *ngFor="let option of options" (click)="change(option)" [ngClass]="{ 'chosen': option == this.chosenOption }">{{ option }}</div>
+    </div>
+  </div>
+</div>

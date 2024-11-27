@@ -1,0 +1,39 @@
+<div id="uploadImageContainer">
+  <div class="top">
+    <p>Upload your image.</p>
+    <div (click)="cancel()"><svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>cancel</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="work-case" fill="#000000" transform="translate(91.520000, 91.520000)"> <polygon id="Close" points="328.96 30.2933333 298.666667 1.42108547e-14 164.48 134.4 30.2933333 1.42108547e-14 1.42108547e-14 30.2933333 134.4 164.48 1.42108547e-14 298.666667 30.2933333 328.96 164.48 194.56 298.666667 328.96 328.96 298.666667 194.56 164.48"> </polygon> </g> </g> </g></svg></div>
+  </div>
+  <div class="input">
+    <div class="uploadSwitchContainer">
+      <div class="uploadSwitch">
+        <input type="radio" name="avatarType" value="computer" (change)="changeWay()" [(ngModel)]="way" id="computer" checked /><label for="computer">Computer</label>
+        <input type="radio" name="avatarType" value="url" (change)="changeWay()" [(ngModel)]="way" id="url" /><label for="url">Url</label>
+        <div class="slider"></div>
+      </div>
+    </div>
+    <div class="uploadContainer" *ngIf="way == 'computer'; else url">
+      <ng-container *ngIf="uploadedImage.value; else uploadFile">
+        {{ uploadedImage.value }}
+      </ng-container>
+      <ng-template #uploadFile>
+        <div style="display: flex; align-items: center;"><div class="uploadBtn">Upload a file</div><span>...or drag.</span></div>
+      </ng-template>
+      <span [ngStyle]="{ color: isError ? 'red' : 'inherited' }" class="formatTypes">(Accepted format types: JPEG, PNG, BMP)</span>
+      <input #uploadedImage type="file"/>
+    </div>
+    <ng-template #url>
+      <div class="addressSelectionContainer">
+        <div class="inputBox">
+          <input #uploadedImage type="text" id="url" required="required" />
+          <label for="url">Url</label>
+        </div>
+        <span [@appear] *ngIf="isError" class="error">Incorrect url</span>
+      </div>
+    </ng-template>
+    <img #testImg crossorigin="anonymous" style="display: none" />
+    <div class="actionContainer">
+      <p (click)="cancel()">Cancel</p>
+      <button [ngClass]="{ 'loading': isLoading }" (click)="save()" type="button" class="btn btn-secondary">Upload</button>
+    </div>
+  </div>
+</div>

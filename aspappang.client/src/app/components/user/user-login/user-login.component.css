@@ -1,0 +1,28 @@
+.authenticationContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.inputBox {
+    margin-bottom: 1rem;
+}
+
+.inputBox + .error {
+    margin-top: -.3rem;
+    margin-bottom: 1rem;
+}
+
+.inputBox input {
+  width: 100%;
+}
+
+.form {
+    width: 20rem;
+    margin-right: 20rem
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}

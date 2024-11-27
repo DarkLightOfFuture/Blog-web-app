@@ -1,0 +1,106 @@
+.selectBox {
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+}
+
+.selectBox .select {
+  border-radius: .6rem;
+  transition-delay: 200ms;
+  transition-property: border-radius;
+  padding: .4rem;
+  background-color: #f2e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .3rem;
+}
+
+.selectBox .select.darkTheme, .selectBox .options.darkTheme, .selectBox .options div.darkTheme {
+  background-color: #161515 !important;
+}
+
+.selectBox .select.focus {
+  border-radius: .6rem .6rem 0rem 0rem;
+  border-bottom: 1px solid #cbc6c6;
+  transition-delay: 0ms;
+  transition-property: border-radius;
+}
+
+.selectBox .select.darkTheme.focus {
+  border-color: #282727;
+}
+
+.selectBox .select p {
+  margin: 0rem !important;
+}
+
+.selectBox .select p:nth-child(2) {
+  font-weight: 600;
+  font-size: 1.2rem;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.selectBox .select p:nth-child(2).focus {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+.selectBox input {
+  display: none;
+}
+
+.selectBox .options {
+  min-width: 100%;
+  max-width: 100%;
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  background-color: #f2e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0rem 0rem .4rem .4rem;
+  transform-origin: -50% 0%;
+}
+
+.selectBox .options div {
+  width: 100%;
+  font-size: .9rem;
+  text-align: center;
+  padding: 0rem .3rem .3rem .3rem;
+  border-bottom: 1px solid #cbc6c6;
+}
+
+.selectBox .options div.darkTheme {
+  border-color: #282727;
+}
+
+.selectBox .options div.chosen {
+  cursor: default;
+  background-color: #d5cece;
+}
+
+.selectBox .options div.darkTheme.chosen {
+  background-color: #1a1919 !important;
+}
+
+.selectBox .select:hover, .selectBox .options div:not(div[class*='chosen']):hover {
+  background-color: #ded8d8;
+}
+
+.selectBox .select.darkTheme:hover, .selectBox .options div.darkTheme:not(div[class*='chosen']):hover {
+  background-color: #121111 !important;
+}
+
+.selectBox .options div:last-child {
+  border-radius: 0rem 0rem .4rem .4rem;
+  border-bottom: none;
+}

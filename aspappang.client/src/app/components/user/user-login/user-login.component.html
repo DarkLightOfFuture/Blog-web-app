@@ -1,0 +1,62 @@
+<div class="authenticationContainer">
+  <div class="container">
+    <div class="col-md-4">
+      <section>
+        <div class="form" [formGroup]="formGroup">
+          <h1>Login</h1>
+          <h2>Use a local account to log in.</h2>
+          <hr />
+          <div class="inputBox">
+            <input formControlName="email" id="email" required />
+            <label for="email">Email</label>
+          </div>
+          <div [@appear] class="error" *ngIf="email?.dirty && email?.touched && email?.errors?.['email']">
+            The email is invalid.
+          </div>
+          <div class="inputBox">
+            <input formControlName="password" id="password" type="password" required />
+            <label for="password">Password</label>
+          </div>
+          <div [@appear] class="error" *ngIf="formModel.error">
+            {{ formModel.error }}
+          </div>
+          <div class="checkbox mb-3">
+            <label asp-for="Input.RememberMe" class="form-label">
+              <input formControlName="rememberMe" class="form-check-input" type="checkbox" />
+              Remember me
+            </label>
+          </div>
+          <div style="margin-bottom: 1.5rem">
+            <button id="login-submit" [ngClass]="{ 'loading': formModel.isLoading }"
+                    type="submit" [disabled]="!formGroup.valid || formModel.isLoading" class="w-100 btn btn-lg btn-primary" (click)="signIn()">
+              Log in
+            </button>
+          </div>
+          <div>
+            <p>
+              <a id="forgot-password" [routerLink]="['/forgot-password']">Forgot your password?</a>
+            </p>
+            <p>
+              <a asp-page="./Register" [routerLink]="['/user/register']">Register as a new user</a>
+            </p>
+            <p>
+              <a id="resend-confirmation" [routerLink]="['/resend-email-confirmation']">Resend email confirmation</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div>
+      <section>
+        <h3>Use another service to log in.</h3>
+        <hr />
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+          <div>
+            <p>
+            </p>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

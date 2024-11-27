@@ -1,0 +1,25 @@
+<div>
+  <p>Ordinary Users</p>
+  <div id="usersContainer" class="groupContainer">
+    <div>
+      <div *ngFor="let ordinaryUser of this.ordinaryUsers"
+           (click)="changeRole(ordinaryUser, this.ordinaryUsers, this.admins)">
+        {{ ordinaryUser }}
+      </div>
+    </div>
+  </div>
+  <div (click)="reset()" class="btn btn-secondary">Reset</div>
+  <p>Administrators</p>
+  <div id="adminsContainer" class="groupContainer">
+    <div>
+      <div *ngFor="let admin of this.admins"
+           (click)="changeRole(admin, this.admins, this.ordinaryUsers)">
+        {{ admin }}
+      </div>
+    </div>
+  </div>
+  <button #saveBtn [ngClass]="{ 'loading': this.isLoading }" class="btn btn-primary" type="submit">Save changes</button>
+</div>
+<div class="formValidationErrors">
+  <div [@appear] *ngIf="this.isSuccess" class="success"><span>Users' roles have been changed successfully.</span></div>
+</div>

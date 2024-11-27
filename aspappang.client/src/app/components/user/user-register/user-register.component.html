@@ -1,0 +1,89 @@
+<div class="authenticationContainer">
+  <h1 *ngIf="!this.isRegistered">Register</h1>
+  <div class="row">
+    <ng-container *ngIf="!this.isRegistered; else elseBlock">
+      <div class="col-md-3">
+        <div [formGroup]="form">
+          <h2>Create a new account.</h2>
+          <hr />
+          <div class="inputBox">
+            <input formControlName="email" id="email" required />
+            <label for="email">Email</label>
+          </div>
+          <div *ngIf="this.form.get('email')?.errors?.['invalid'] || this.isInvalidEmail" [@appear] class="error">
+            Invalid email.
+          </div>
+          <div class="inputBox">
+            <input formControlName="username" id="username" required />
+            <label for="username">Username</label>
+          </div>
+          <div *ngIf="!this.model.isUnique" class="error">
+            Not unique username.
+          </div>
+          <div *ngIf="this.form.get('username')?.errors?.['invalid']" [@appear] class="error">
+            Username cannot contain spaces and must be between 5 and 30 characters.
+          </div>
+          <div class="inputBox">
+            <input formControlName="firstName" id="firstName" required />
+            <label for="firstName">First name</label>
+          </div>
+          <div class="inputBox">
+            <input formControlName="lastName" id="lastName" required />
+            <label for="lastName">Last name</label>
+          </div>
+          <div class="inputBox">
+            <input formControlName="newPassword" type="password" (blur)="validateNewPassword()" id="password1" required />
+            <label for="password1">Password</label>
+          </div>
+          <div [@appear] *ngIf="this.form.get('newPassword')?.errors?.['passwordStrength']" [@appear] class="error">
+            <li>Password must be between 6 and 100 characters.</li>
+            <li>Password must have at least one special character.</li>
+            <li>Password must have at least one lower case.</li>
+            <li>Password must have at least one upper case.</li>
+          </div>
+          <div class="inputBox">
+            <input formControlName="newPassword2" (blur)="validateNewPassword()" type="password" id="password2" required />
+            <label for="password2">Confirm password</label>
+          </div>
+          <div [@appear] *ngIf="!this.model.areSame" class="error">
+            Password are not the same.
+          </div>
+          <button type="submit" [disabled]="!this.form.valid || !this.model.areSame || this.model.isLoading"
+                  [ngClass]="{ 'loading': this.model.isLoading }" (click)="register()" class="btn btn-primary">Register</button>
+        </div>
+      </div>
+      <div class="col-md-5 col-md-offset-2">
+        <section>
+          <h3>Use another service to register.</h3>
+          <hr />
+          <div>
+            <!--<p>
+              There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                article
+                about setting up this ASP.NET application to support logging in via external services
+              </a>.
+            </p>-->
+          </div>
+          <!--}
+          else
+          {-->
+          <!--<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            <div>
+              <p>
+                @foreach (var provider in Model.ExternalLogins!)
+                {
+                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                }
+              </p>
+            </div>
+          </form>-->
+        </section>
+      </div>
+    </ng-container>
+    <ng-template #elseBlock>
+      <p style="font-size: 3rem; font-weight: 600">
+        Check your mail and confirm email.
+      </p>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<p style="font-size: 3rem; font-weight: 600">
+  <ng-container *ngIf="!this.confirmed; else elseBlock">
+    Confirm email. <button (click)="confirm()" style="font-size: 1.5rem" [ngClass]="{ 'loading': this.isLoading }" class="btn btn-primary">Accept</button>
+  </ng-container>
+  <ng-template #elseBlock>
+    Email confirmed. Now you can close this page.
+  </ng-template>
+</p>

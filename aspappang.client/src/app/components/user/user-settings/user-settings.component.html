@@ -1,0 +1,24 @@
+<div id="optionsContainer">
+  <div #sectionsContainer id="sections">
+    <ng-container *ngFor="let section of this.sections; index as i">
+      <ng-container *ngIf="validate(section)">
+        <div [ngStyle]="{ 'cursor': i != this.chosenSection.index ? 'pointer' : 'default' }" #sections>{{ section }}</div>
+      </ng-container>
+    </ng-container>
+    <div #slider class="slider">‎ </div>
+  </div>
+  <div id="options">
+    <user-email [user]="this.user" *ngIf="chosenSection.name == 'Email'; else elseBlock"></user-email>
+    <ng-template #elseBlock>
+      <user-password *ngIf="chosenSection.name == 'Password'; else elseBlock2"></user-password>
+
+      <ng-template #elseBlock2>
+        <user-profile [user]="this.user" *ngIf="chosenSection.name == 'Profile'; else elseBlock3"></user-profile>
+
+        <ng-template #elseBlock3>
+          <user-administration></user-administration>
+        </ng-template>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

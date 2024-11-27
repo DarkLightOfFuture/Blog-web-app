@@ -1,0 +1,236 @@
+.itemRowContainer {
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f1eded;
+}
+
+.itemRowContainer.darkTheme {
+  background-color: #1f1f1f;
+}
+
+.itemRowContainer:has(div[class*='delete']:first-child:hover) {
+  background-color: #aa0815;
+  transition: background-color .4s;
+}
+
+.itemRowContainer.darkTheme:has(div[class*='delete']:first-child:hover) {
+  background-color: #45070c;
+  transition: background-color .4s;
+}
+
+.itemRowContainer.toDelete {
+  background-color: #d00d1b !important;
+  transition: background-color .4s;
+}
+
+.itemRowContainer.darkTheme.toDelete {
+  background-color: #5b090f !important;
+  transition: background-color .4s;
+}
+
+.itemRowContainer > div:first-child {
+  font-size: 1.5rem;
+  position: relative;
+  top: .5rem;
+  padding-right: .7rem;
+  font-weight: 800;
+  user-select: none;
+  cursor: pointer;
+  color: #262626;
+  min-height: 100%;
+  min-width: 1rem;
+}
+
+.itemRowContainer > div:first-child div {
+    color: #f1eded;
+}
+
+.itemRowContainer.darkTheme > div:first-child div {
+  color: #2f2e2e;
+}
+
+.itemRowContainer.toDelete > div:first-child div {
+  color: #550707;
+  transition: color .4s;
+  display: block;
+}
+
+.itemRowContainer.darkTheme.toDelete > div:first-child div {
+  color: #450606;
+}
+
+.itemRowContainer > div:first-child div {
+  display: none;
+}
+
+.itemRowContainer > div:first-child:hover div {
+  display: block;
+}
+
+.itemRow {
+  width: 100%;
+  background-color: #f8f3f3;
+  border: 1px solid #d8d7d7;
+  border-radius: 1.2rem;
+}
+
+.itemRow.darkTheme {
+  background-color: #232323;
+  border-color: #2f2f2f;
+}
+
+.itemRow > div:first-child {
+  display: flex;
+}
+
+.itemRow > div:first-child > * {
+  position: relative;
+  text-align: center;
+  border: 0px solid #d8d7d7;
+  border-right-width: 2px;
+  padding: .8rem;
+}
+
+.itemRow > div:first-child.darkTheme > * {
+  border-color: #2f2f2f;
+}
+
+.itemRow > div:first-child > *:not(:last-child) {
+    flex: 1;
+}
+
+.itemRow > div:first-child > *:last-child {
+  margin-left: auto;
+  padding: .8rem 2rem .8rem 2rem;
+  border-right: none;
+}
+
+.itemRow > * .name {
+  background-color: #f8f3f3;
+  padding: 0px .6rem;
+  position: absolute;
+  bottom: calc(100% - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  user-select: none;
+  font-size: .9rem;
+  font-weight: 700;
+  color: #a3a2a2;
+}
+
+.itemRow > * .name.darkTheme {
+  background-color: #1f1f1f;
+}
+
+.itemRow .arrowBtn {
+  cursor: pointer;
+  user-select: none;
+  background-color: #eae4e4;
+  padding: .4rem .7rem .3rem .7rem;
+  border-radius: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color .3s;
+}
+
+.itemRow .arrowBtn.darkTheme {
+  background-color: #2b2b2b;
+}
+
+.itemRow .arrowBtn:hover {
+    background-color: #d8d0d0;
+}
+
+.itemRow .arrowBtn.darkTheme:hover {
+  background-color: #333333;
+}
+
+.arrowBtn span {
+  display: block;
+  position: relative;
+}
+
+.itemRow .data {
+  width: 100%;
+  padding: 0rem 1.5rem 1.5rem 1.5rem;
+  font-size: 1.3rem;
+}
+
+.itemRow .data table {
+  width: 90%;
+  border-collapse: separate;
+  border-spacing: .8rem;
+}
+
+.itemRow .data table tr td:first-child {
+  display: flex;
+  justify-content: start;
+  user-select: none;
+  font-weight: 700;
+  color: #878787;
+}
+
+.itemRow .data table tr td:nth-child(2):not([class*='tagsRow']) input {
+    width: 100%;
+}
+
+.itemRow .data .actions {
+  display: flex;
+  justify-content: end;
+  padding-right: 3rem;
+  gap: 1rem;
+  padding-top: 1rem;
+  padding-bottom: .1rem;
+}
+
+.tagContent {
+    font-size: 1.1rem;
+}
+
+.articleTags {
+  font-size: 1.25rem;
+}
+
+.articleTags .tagForm {
+    position: relative;
+}
+
+.articleTags .tagForm.edited:hover::after {
+  position: absolute;
+  right: -.7rem;
+  content: "x";
+  font-size: .9rem;
+  color: red;
+}
+
+.articleTags .overlay {
+  background-color: #f8f3f3 !important; 
+}
+
+.articleTags .overlay.darkTheme {
+  background-color: #232323 !important;
+}
+
+div:has(div[id='removeBtn']) {
+  display: flex;
+  gap: 1rem;
+  position: fixed;
+  z-index: 990;
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: .9rem;
+  border-radius: 1rem 1rem 0rem 0rem;
+  background-color: #ffffff;
+  border: 0px solid var(--border-lightMode);
+  border-width: .15rem .15rem 0rem .15rem;
+}
+
+div:has(div[id='removeBtn']).darkTheme {
+  background-color: var(--menu-darkTheme);
+  border-color: var(--border-darkMode);
+}

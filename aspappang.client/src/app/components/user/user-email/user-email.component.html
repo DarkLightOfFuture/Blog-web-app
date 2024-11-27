@@ -1,0 +1,15 @@
+<div>
+  <div class="inputBox">
+    <input disabled [value]="this.user?.email" type="text" required="required" />
+    <label>Current email</label>
+  </div>
+  <div class="inputBox">
+    <input [formControl]="email" id="Email" type="text" required="required" />
+    <label for="Email">New Email</label>
+  </div>
+  <button [ngClass]="{ 'loading': this.isLoading }" [disabled]="!this.email.valid" (click)="change()" class="btn btn-primary">Save changes</button>
+</div>
+<div class="formValidationErrors">
+  <div [@appear] *ngIf="this.email.errors?.['invalid']"><span>Invalid email.</span></div>
+  <div [@appear] class="success" *ngIf="this.isSuccess"><span>Check your email and confirm the new address.</span></div>
+</div>

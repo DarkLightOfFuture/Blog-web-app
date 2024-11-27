@@ -1,0 +1,51 @@
+.container {
+  font-size: 1.8rem;
+  display: flex;
+  width: fit-content;
+  max-width: 80%;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  border: 1px solid #dddcdc;
+  padding: 3rem;
+  border-radius: 1rem;
+}
+
+.container.darkTheme {
+  border-color: #2e2d2d;
+}
+
+.inputBox {
+    margin-top: -1rem;
+}
+
+p {
+    font-size: 3rem;
+    margin: 0rem;
+    text-align: center;
+}
+
+.btn {
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+.container:not(:has(div[class*='inputBox'])) p {
+    font-size: 1.4rem;
+}
+
+.inputBox input {
+  width: 100%;
+}
+
+.inputBox + .error {
+  margin-top: -1rem;
+}
+
+.error + .error {
+  margin-top: .5rem;
+}
+
+.error + .btn {
+  margin-top: 1.5rem;
+}

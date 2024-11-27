@@ -1,0 +1,58 @@
+version: "3.8"
+
+name: "asp-ang-app" 
+
+services:
+    db-asp:
+        container_name: "db-asp"
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+            - "1433:1433"
+        environment:
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: "A7#kLmY2@P"
+        healthcheck:
+          test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'A7#kLmY2@P' -C -Q 'SELECT 1' || exit 1"]
+          interval: "10s"
+          timeout: "10s"
+          retries: "3"
+          start_period: "15s"
+        networks:
+            - app-net
+
+    asp-container:
+        container_name: "asp-container"
+        depends_on:
+            db-asp:
+                condition: service_healthy
+        build: .\aspAppAng.Server
+        image: asp:1.0
+        ports:
+            - "8080:8080"
+            - "8081:8081"
+        environment:
+            ASPNETCORE_URLS: "https://+:8080;http://+:8081"
+            ASPNETCORE_HTTPS_PORTS: "8080"
+            ASPNETCORE_Kestrel__Certificates__Default__Path: "/https/sslCert.pfx"
+            ASPNETCORE_Kestrel__Certificates__Default__Password: "pas123"
+        volumes:
+            - "c:\\asp-keys:/App/keys"
+            - "c:\\asp-certs:/https"
+        networks:
+            - app-net
+
+    angular-container:
+        container_name: "angular-container"
+        depends_on:
+            asp-container:
+                condition: service_started
+        build: .\aspAppAng.client
+        image: angular:1.0
+        ports:
+            - "443:443"
+        networks:
+            - app-net
+    
+networks:
+    app-net:
+        name: "app-net"

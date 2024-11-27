@@ -1,0 +1,3 @@
+K:\c#\basic\aspAppAng\aspappang.client\obj\Debug\aspappang.client.esproj.CoreCompileInputs.cache
+K:\CSharp\basic\aspAppAng\aspappang.client\obj\Debug\aspappang.client.esproj.CoreCompileInputs.cache
+C:\CSharp\basic\aspAppAng\aspappang.client\obj\Debug\aspappang.client.esproj.CoreCompileInputs.cache

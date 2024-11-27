@@ -1,0 +1,117 @@
+#articlePreviewsContainer {
+  height: min-content;
+  display: flex;
+  gap: 1.3rem;
+  flex-wrap: wrap;
+}
+
+div:has(div[class*='articleContainer']) {
+  text-align: center;
+  height: min-content;
+}
+
+.articleContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 16rem;
+  height: 16rem;
+  border-radius: .7rem;
+  background-color: #dedbd9;
+  border: .125rem solid #b4b4b4;
+  overflow: hidden;
+  transition: -webkit-box-shadow 500ms, -moz-box-shadow 500ms, box-shadow 500ms;
+}
+
+.articleContainer:empty {
+  background-color: #e4e3e3 !important;
+  border: none;
+}
+
+.articleContainer.darkTheme:empty:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.articleContainer.darkTheme:empty {
+  background-color: #1e1e1e !important;
+}
+
+.articleContainer:active {
+  background-color: #96b2f1;
+  transition: background-color 1s;
+}
+
+.articleContainer:has(img):hover {
+  transition: 500ms;
+  -webkit-box-shadow: 0px 0px 4px 6px rgba(181, 178, 178, 1);
+  -moz-box-shadow: 0px 0px 4px 6px rgba(181, 178, 178, 1);
+  box-shadow: 0px 0px 4px 6px rgba(181, 178, 178, 1);
+}
+
+.articleContainer.darkTheme {
+  background: #313030;
+  color: #d1d1d1;
+  border-color: #484545;
+}
+
+.articleContainer.darkTheme:hover {
+  -webkit-box-shadow: 0px 0px 4px 6px rgb(19, 19, 21);
+  -moz-box-shadow: 0px 0px 4px 6px rgb(19, 19, 21);
+  box-shadow: 0px 0px 4px 6px rgb(22, 22, 25);
+}
+
+.articleContainer p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 0rem 0rem .7rem .7rem;
+  padding: 0rem .25rem;
+  transition: top 1.1s;
+}
+
+.articleContainer div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #d5d5d54e;
+  backdrop-filter: blur(0.15rem);
+  transition: backdrop-filter .5s, background-color .9s ease-out;
+}
+
+.articleContainer.darkTheme div {
+  background-color: #000000a6;
+}
+
+.articleContainer:hover p {
+  top: 150%;
+}
+
+.articleContainer:hover div {
+  backdrop-filter: blur(0rem);
+  background-color: transparent;
+}
+
+.articleContainerLink {
+text-decoration: none;
+color: black;
+}
+
+.articlePreviewImg {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: .7rem !important;
+  margin-right: 7px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.articlePreviewDescription {
+  font-size: .9rem;
+  text-align: justify;
+  margin: 0px 10px 0px 10px;
+}

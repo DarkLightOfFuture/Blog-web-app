@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.271090-alpha">
+  <PropertyGroup>
+    <StartupCommand>npm start</StartupCommand>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
+    <!-- Allows the build (or compile) script located on package.json to run on Build -->
+    <ShouldRunBuildScript>false</ShouldRunBuildScript>
+    <!-- Folder where production build objects will be placed -->
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\aspappang.client\</BuildOutputFolder>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="src\app\components\posts\main\**" />
+    <None Remove="src\app\Nowy folder1\**" />
+    <TypeScriptConfiguration Remove="src\app\components\posts\main\**" />
+    <TypeScriptConfiguration Remove="src\app\Nowy folder1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\app\components\comments\" />
+    <Folder Include="src\app\components\tags\" />
+    <Folder Include="src\app\components\user\" />
+    <Folder Include="src\app\services\item\" />
+    <Folder Include="src\app\services\alert\" />
+    <Folder Include="src\app\services\change-template\" />
+    <Folder Include="src\postImages\" />
+  </ItemGroup>
+</Project>

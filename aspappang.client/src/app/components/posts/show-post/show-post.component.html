@@ -1,0 +1,106 @@
+<ng-container *ngIf="this.exists; else elseBlock">
+  <h1 class="title">{{ post?.title }}</h1> <br />
+
+  <image-preview></image-preview>
+
+  <img id="thumbnail" [src]="post?.thumbnail" /> <br />
+
+  <div id="articleInfo">
+    <div class="info">
+      <svg id="authorSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.999 511.999" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M421.578,190.264l-99.847-99.847c-2.439-2.439-6.391-2.439-8.829,0L82.824,320.495c-2.439,2.439-2.439,6.392,0,8.829 l99.847,99.847c2.439,2.439,6.391,2.439,8.829,0l230.078-230.078C424.017,196.655,424.017,192.703,421.578,190.264z"></path> </g> </g> <g> <g> <path d="M506.511,87.672L424.323,5.484c-7.308-7.31-19.175-7.315-26.488,0l-49.616,49.616c-2.439,2.439-2.439,6.391,0,8.829 l99.847,99.847c2.439,2.437,6.391,2.437,8.829,0l49.616-49.616C513.826,106.847,513.826,94.987,506.511,87.672z"></path> </g> </g> <g> <g> <path d="M508.133,491.11c-1.054-9.556-9.489-16.599-19.104-16.599H111.633l36.058-15.163c4.088-1.719,5.131-7.034,1.994-10.17 l-86.854-86.854c-3.137-3.135-8.451-2.094-10.17,1.994C52.224,365.359,2.052,484.66,1.627,485.707 c-5.815,13.208,4.855,27.01,18.107,26.263H489.52C500.566,511.97,509.379,502.408,508.133,491.11z"></path> </g> </g> </g></svg>
+      <span>{{ post?.authorInfo }}</span>
+    </div>
+    <div class="info">
+      <svg id="dateSvg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7" stroke-width="2" stroke-linecap="round"></path> <rect x="6" y="12" width="3" height="3" rx="0.5"></rect> <rect x="10.5" y="12" width="3" height="3" rx="0.5"></rect> <rect x="15" y="12" width="3" height="3" rx="0.5"></rect> </g></svg>
+      <span>{{ post?.pubDate }}</span>
+    </div>
+    <span id="shareBtn" (click)="copyLink()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M13.803 5.33333C13.803 3.49238 15.3022 2 17.1515 2C19.0008 2 20.5 3.49238 20.5 5.33333C20.5 7.17428 19.0008 8.66667 17.1515 8.66667C16.2177 8.66667 15.3738 8.28596 14.7671 7.67347L10.1317 10.8295C10.1745 11.0425 10.197 11.2625 10.197 11.4872C10.197 11.9322 10.109 12.3576 9.94959 12.7464L15.0323 16.0858C15.6092 15.6161 16.3473 15.3333 17.1515 15.3333C19.0008 15.3333 20.5 16.8257 20.5 18.6667C20.5 20.5076 19.0008 22 17.1515 22C15.3022 22 13.803 20.5076 13.803 18.6667C13.803 18.1845 13.9062 17.7255 14.0917 17.3111L9.05007 13.9987C8.46196 14.5098 7.6916 14.8205 6.84848 14.8205C4.99917 14.8205 3.5 13.3281 3.5 11.4872C3.5 9.64623 4.99917 8.15385 6.84848 8.15385C7.9119 8.15385 8.85853 8.64725 9.47145 9.41518L13.9639 6.35642C13.8594 6.03359 13.803 5.6896 13.803 5.33333Z"></path> </g></svg>
+    </span>
+    <div id="ratingContainer" [ngClass]="{ 'clicked': this.isUpvote || this.isDownvote }">
+      <p (click)="upvote()" [ngClass]="{ 'clicked': this.isUpvote }" class="submitBtn">+</p>
+      <span>{{ post?.rating }}</span>
+      <p (click)="downvote()" [ngClass]="{ 'clicked': this.isDownvote }" class="submitBtn">-</p>
+    </div>
+  </div>
+
+  <div class="articleTags">
+    <label *ngFor="let tag of post?.tags" class="tagForm checked">
+      <span class="tagName">{{ tag.name }}</span>
+      <span class="tagCount">({{ tag.count }})</span>
+    </label>
+    <ng-container *ngIf="this.isHidden">
+      <div class="overlay"></div>
+      <div class="moreBtn" (click)="showMore()">Show more</div>
+    </ng-container>
+  </div>
+
+  <div #description class="ql-editor" style="height: auto;" [innerHTML]="text"></div>
+
+  <section id="commentSection" #commentSection>
+    <div>
+      <h2 style="padding-left: 1rem">Comment Section</h2>
+      <select-box (dataEvent)="changeCommentsOrder($event)" [options]="orderArray"></select-box>
+    </div>
+    <hr />
+    <comment-form [comments]="this.comments" (dataEvent)="postComment($event)"></comment-form>
+
+    <ng-container *ngFor="let comment of comments.array">
+      <ng-container *ngIf="!comment.isLoading && comment.error == null; else elseBlock">
+        <div [@appear] class="commentContainer">
+          <ng-container [ngTemplateOutlet]="commentTemplate" [ngTemplateOutletContext]="{ comment: comment }"></ng-container>
+          <div class="commentOpts">
+            <p (click)="openOptions(comment)">. . .</p>
+            <div *ngIf="comment.content?.openedOptions" class="opts">
+              <div>
+                Report comment
+              </div>
+              <div class="delete" (click)="this.commentService?.deleteItem(comment)" style="color: rgb(191, 8, 8);">
+                Delete comment
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseBlock>
+        <ng-container *ngIf="comment.isLoading; else error">
+          <div [@appear] class="resetCommentContainer">
+            <div class="createdComment">
+              <ng-container [ngTemplateOutlet]="commentTemplate" [ngTemplateOutletContext]="{ comment: comment }"></ng-container>
+              <p class="wait">Posting...</p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #error>
+          <div class="resetCommentContainer">
+            <div class="createdComment" style="opacity: 0.5;">
+              <ng-container [ngTemplateOutlet]="commentTemplate" [ngTemplateOutletContext]="{ comment: comment }"></ng-container>
+              <p style="color: red;">⚠ Failed to post the comment. (Error {{ comment.error }})</p>
+            </div>
+            <div class="resetBtnComment" (click)="postComment(comment)">⟳</div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </ng-container>
+  </section>
+</ng-container>
+
+<ng-template #elseBlock>
+  <ng-container *ngIf="this.exists == null; else notFound">
+
+  </ng-container>
+
+  <ng-template #notFound>
+    <not-found></not-found>
+  </ng-template>
+</ng-template>
+
+<ng-template #commentTemplate let-comment="comment">
+  <div class="comment">
+    <div class="commentAuthorInfo">
+      <p><img [src]="comment.content.user.avatar"></p>
+      <p>&#64;<span>{{ comment.content.user.username }}</span><span class="pubDate">{{ comment.content.pubDate }}</span></p>
+    </div>
+    {{ comment.content.content }}
+  </div>
+</ng-template>

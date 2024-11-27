@@ -1,0 +1,6 @@
+<div id="imagePreview">
+  <ng-container *ngIf="this.src">
+    <img [@scale] [src]="this.src" />
+  </ng-container>
+</div>
+<div *ngIf="this.src" id="overlay"></div>

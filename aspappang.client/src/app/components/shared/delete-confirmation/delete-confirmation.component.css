@@ -1,0 +1,11 @@
+.deleteForm {
+  background-color: var(--menu-lightMode);
+  padding: 2rem;
+  border-radius: 1rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.deleteForm.darkTheme {
+  background-color: var(--menu-darkTheme);
+}

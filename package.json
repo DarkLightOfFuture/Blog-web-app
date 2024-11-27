@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@angular/cdk": "^18.2.3",
+    "@angular/common": "^17.3.12",
+    "@angular/material": "^18.2.3",
+    "ngx-cookie-service": "^18.0.0",
+    "quill": "^2.0.2",
+    "sendgrid": "^5.2.3"
+  },
+  "devDependencies": {
+    "run-script-os": "^1.1.6"
+  }
+}

@@ -1,0 +1,15 @@
+<div id="linkCreatorPopup" class="creatorContainer">
+  <div [formGroup]="form">
+    <p>Link uploader</p>
+    <div class="inputBox">
+      <input formControlName="href" id="linkHref" required="required" />
+      <label for="linkHref">Href</label>
+    </div>
+    <div class="inputBox">
+      <input formControlName="tag" id="linkTag" required="required" />
+      <label for="linkTag">Tag</label>
+    </div>
+    <button [disabled]="form.valid ? false : true" (click)="create()" [ngClass]="{ 'loading': isLoading }" class="btn btn-primary">Add</button>
+  </div>
+  <svg (click)="close()"  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+</div>

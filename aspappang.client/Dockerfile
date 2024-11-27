@@ -3,7 +3,7 @@ FROM node:18 AS build
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app
-COPY ../node_modules /usr/src/app
+COPY node_modules /usr/src/app
 COPY ../*.json /usr/src/app
 
 #Installation of angular's dependencies

@@ -42,10 +42,11 @@ Email Address []: any
 ```
 - Run localhostAngular.crt, click `install certificate`, and follow instructions
 
-## To build an application, follow these steps:
-1. Go to main directory of the application.
-2. Run command `docker-compose up`
-3. After that has completed, At your browser open: https://localhost
+## Application building
+1. Run `docker pull mcr.microsoft.com/mssql/server:2022-latest`.
+2. Go to main directory of the application.
+3. Run command `docker-compose up`.
+4. After that has completed, At your browser open: https://localhost
 
 ## Built in administrator account
 - Email: default@default.com

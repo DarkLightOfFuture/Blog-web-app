@@ -10,6 +10,10 @@ Application has such features as:
 - user personalization
 - access control for particular subpages
 
+## Preview
+![](screenshots/1.png)
+For more preview check screenshots directory.
+
 ## Self signed certificate (required to proper work of app, do this before building)
 ### ASP.NET Core
 On Windows:
